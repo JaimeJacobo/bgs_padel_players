@@ -1,17 +1,21 @@
-import { Player } from '../../types/Player'
+import {Dispatch, SetStateAction} from 'react'
+import {Player} from '../../types/Player'
 
 type ButtonsSectionProps = {
-  players: Player[],
+  _players: Player[]
+  _setPlayers: Dispatch<SetStateAction<Player[]>>
+  _playersFromDB: Player[]
 }
 
-
-const ButtonsSection: React.FC<ButtonsSectionProps> = ({players}) => {
-
+const ButtonsSection: React.FC<ButtonsSectionProps> = ({
+  _players,
+  _setPlayers,
+  _playersFromDB,
+}) => {
   let countriesToRender: string[] = []
-
-  const assignCountries = (countriesToRender: string[])=>{
-    players.forEach((player)=>{
-      if(!countriesToRender.includes(player.country)){
+  const assignCountries = (countriesToRender: string[]) => {
+    _playersFromDB.forEach((player) => {
+      if (!countriesToRender.includes(player.country)) {
         countriesToRender.push(player.country)
       }
     })
@@ -20,14 +24,40 @@ const ButtonsSection: React.FC<ButtonsSectionProps> = ({players}) => {
 
   countriesToRender = assignCountries(countriesToRender)
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const buttonId = (event.target as HTMLButtonElement).id
+    const playersToRender =
+      buttonId === 'all'
+        ? _playersFromDB
+        : _playersFromDB.filter((player) => player.country === buttonId)
+    _setPlayers(playersToRender)
+  }
+
+ const handleRandom = () => {
+  const randomPlayer = _playersFromDB[Math.floor(Math.random() * _playersFromDB.length)];
+  _setPlayers([randomPlayer])
+ };
+
+
   return (
     <div className="PlayerCard">
-      <button>Todos</button>
-      {
-        countriesToRender.map((country)=>{
-          return <button>{country}</button>
-        })
-      }
+      <button id="all" onClick={(event) => handleClick(event)}>
+        Todos
+      </button>
+      <button onClick={() => handleRandom()}>
+        Random
+      </button>
+      {countriesToRender.map((country, index) => {
+        return (
+          <button
+            key={index}
+            id={country}
+            onClick={(event) => handleClick(event)}
+          >
+            {country}
+          </button>
+        )
+      })}
     </div>
   )
 }

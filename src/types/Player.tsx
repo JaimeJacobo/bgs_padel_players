@@ -5,4 +5,5 @@ export type Player = {
   country: string
   points: number
   img: string
+  flag: string
 }

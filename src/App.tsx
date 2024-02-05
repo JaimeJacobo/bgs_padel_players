@@ -26,6 +26,8 @@ import './App.css'
 
 // printName('Jaime')
 
+import { useState } from 'react'
+
 // Components
 import PlayerCard from './components/PlayerCard/PlayerCard'
 import ButtonsSection from './components/ButtonsSection/ButtonsSection'
@@ -33,7 +35,7 @@ import ButtonsSection from './components/ButtonsSection/ButtonsSection'
 // Types
 import { Player } from './types/Player'
 
-const players: Player[] = [
+const playersFromDB: Player[] = [
   {
     id: '43346',
     name: 'Arturo Coello',
@@ -41,6 +43,7 @@ const players: Player[] = [
     country: 'Spain',
     points: 11933,
     img: 'https://www.padelfip.com/wp-content/uploads/2023/02/5-Coello.png',
+    flag: '🇪🇸'
   },
   {
     id: '00333',
@@ -49,6 +52,7 @@ const players: Player[] = [
     country: 'Spain',
     points: 11501,
     img: 'https://www.padelfip.com/wp-content/uploads/2023/02/1-Galan.png',
+    flag: '🇪🇸'
   },
   {
     id: '65465',
@@ -57,6 +61,7 @@ const players: Player[] = [
     country: 'Spain',
     points: 11501,
     img: 'https://www.padelfip.com/wp-content/uploads/2023/02/2-Lebron.png',
+    flag: '🇪🇸'
   },
   {
     id: '35576',
@@ -65,14 +70,16 @@ const players: Player[] = [
     country: 'Argentina',
     points: 10171,
     img: 'https://www.padelfip.com/wp-content/uploads/2023/02/3-Di-Nenno.png',
+    flag: '🇦🇷'
   },
   {
     id:'00516',
     name: 'Franco Stupaczuk',
     ranking: 5,
-    country: 'Mexico',
+    country: 'Argentina',
     points: 9029,
     img: 'https://www.padelfip.com/wp-content/uploads/2023/02/6-Stupaczuk.png',
+    flag: '🇦🇷'
   },
   {
     id: '00854',
@@ -81,10 +88,22 @@ const players: Player[] = [
     country: 'Argentina',
     points: 8954,
     img: 'https://www.padelfip.com/wp-content/uploads/2023/02/12-Augustin-Tapia-1.png',
+    flag: '🇦🇷'
+  },
+  {
+    id: '00556',
+    name: 'Pablo Lima',
+    ranking: 11,
+    country: 'Brasil',
+    points: 4106,
+    img: 'https://www.padelfip.com/wp-content/uploads/2023/02/9-Lima.png',
+    flag: '🇧🇷'
   },
 ]
 
 const App: React.FC = () => {
+
+  const [players, setPlayers] = useState<Player[]>(playersFromDB)
 
   const renderPlayerCards = ()=>{
     return players.map((eachPlayer)=>{
@@ -95,10 +114,13 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <p>Best Padel Players</p>
-      <ButtonsSection players={players} />
+      <ButtonsSection _playersFromDB={playersFromDB} _players={players} _setPlayers={setPlayers} />
       {renderPlayerCards()}
     </div>
   )
 }
 
 export default App
+
+
+const animals = ['spider', 'snake']

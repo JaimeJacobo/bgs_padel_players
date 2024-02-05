@@ -16,7 +16,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({player}) => {
   return (
     <div className="PlayerCard">
       <p className={countryColor}> Name: {player.name}, Ranking: {player.ranking}, Country: {player.country}</p>
-      { player.country === 'Argentina' ? <p>🇦🇷</p> : <p>🇪🇸</p>}
+      <p>{player.flag}</p>
     </div>
   )
 }
